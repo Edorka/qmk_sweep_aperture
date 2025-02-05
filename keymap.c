@@ -18,9 +18,10 @@
 #include "keycodes.h"
 enum custom_layers {
   _BASE,
-  _RAISE,
   _LOWER,
+  _RAISE,
   _ADJUST,
+  _GAMING,
 };
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -42,9 +43,9 @@ enum {
   TD_Q_ESC
 };
 tap_dance_action_t tap_dance_actions[] = {
-  [TD_CM_SCLN] = ACTION_TAP_DANCE_DOUBLE(KC_COMM, KC_SCLN),
-  [TD_DOT_CLN] = ACTION_TAP_DANCE_DOUBLE(KC_DOT, KC_COLN),
-  [TD_SPC_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_SPACE, KC_TAB),
+//  [TD_CM_SCLN] = ACTION_TAP_DANCE_DOUBLE(KC_COMM, KC_SCLN),
+//  [TD_DOT_CLN] = ACTION_TAP_DANCE_DOUBLE(KC_DOT, KC_COLN),
+//  [TD_SPC_TAB] = ACTION_TAP_DANCE_DOUBLE(KC_SPACE, KC_TAB),
   [TD_Q_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_Q, KC_ESC)
 };
 
@@ -56,10 +57,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
           HOME_A      ,   HOME_S      ,   HOME_D      ,   HOME_F      ,     KC_G      ,             KC_H      ,    HOME_J     ,    HOME_K     ,    HOME_L     ,    KC_QUOT    ,
     //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
+            KC_Z      ,     KC_X      ,     KC_C      ,     KC_V      ,     KC_B      ,             KC_N      ,      KC_M     ,   KC_COMM      ,  KC_DOT      ,    KC_SLSH    ,
+    //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
+    //                               |-------------------------+-------------------------| |-------------------------+-------------------------|
+                                          LT(_LOWER, KC_BSPC)  ,        KC_SPACE        ,            KC_ENT          ,   LT(_RAISE, KC_ESC)
+    //                               |-------------------------+-------------------------| |-------------------------+-------------------------|
+    ),
+    [_GAMING] = LAYOUT(
+    //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
+        TD(TD_Q_ESC)  ,     KC_W      ,     KC_E      ,     KC_R      ,     KC_T      ,             KC_Y      ,      KC_U     ,      KC_I     ,      KC_O     ,      KC_P     ,
+    //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
+            KC_A      ,     KC_S      ,     KC_D      ,     KC_F      ,     KC_G      ,             KC_H      ,    HOME_J     ,    HOME_K     ,    HOME_L     ,    KC_QUOT    ,
+    //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
             KC_Z      ,     KC_X      ,     KC_C      ,     KC_V      ,     KC_B      ,             KC_N      ,      KC_M     , TD(TD_CM_SCLN), TD(TD_DOT_CLN),    KC_SLSH    ,
     //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
     //                               |-------------------------+-------------------------| |-------------------------+-------------------------|
-                                          LT(_LOWER, KC_BSPC)   ,     TD(TD_SPC_TAB)      ,            KC_ENT         ,  LT(_RAISE, KC_ESC)
+                                          LT(_LOWER, KC_BSPC)   ,     TD(TD_SPC_TAB)      ,            KC_ENT        ,  LT(_RAISE, MI_OFF)
     //                               |-------------------------+-------------------------| |-------------------------+-------------------------|
     ),
 
@@ -72,7 +85,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             KC_F6     ,      KC_F7    ,     KC_F8     ,     KC_F9     ,    KC_F10     ,           KC_UNDS     ,   KC_PLUS     ,   KC_LBRC     ,   KC_RBRC     ,    KC_BSLS    , //KC_TILD,
     //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
     //                               |-------------------------+-------------------------| |-------------------------+-------------------------|
-                                          _ADJUST     ,         UNICODE         ,          XXXXXXX          ,       _______
+                                               MO(_ADJUST)     ,         KC_BSPC         ,          UNICODE          ,       _______
     //                               |-------------------------+-------------------------| |-------------------------+-------------------------|
     ),
     [_LOWER] = LAYOUT(
@@ -84,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
           KC_MS_BTN1  ,    XXXXXXX    ,  KC_MS_BTN3   ,  KC_MS_BTN2   ,    XXXXXXX    ,            KC_HOME    ,    KC_PGDN    ,    KC_PGUP    ,     KC_END    ,     KC_TILD   ,
     //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
     //                               |-------------------------+-------------------------| |-------------------------+-------------------------|
-                                                _______        ,        _______          ,         KC_MS_BTN1        ,      _ADJUST
+                                                _______        ,        _______          ,           KC_DEL          ,      MO(_ADJUST)
     //                               |-------------------------+-------------------------| |-------------------------+-------------------------|
     ),
 
@@ -104,11 +117,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const key_override_t p_delete_key_override = ko_make_basic(MOD_MASK_ALT, KC_P, KC_BSPC);
 const key_override_t p_supr_key_override = ko_make_basic(MOD_MASK_CTRL, KC_P, KC_DEL);
 const key_override_t qesc_key_override = ko_make_basic(MOD_MASK_CTRL, KC_Q, KC_ESC);
+const key_override_t esp_tab_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_SPACE, KC_TAB);
+const key_override_t dot_colon_key_override = ko_make_basic(MOD_MASK_CTRL, KC_DOT, KC_COLN);
+const key_override_t comm_scln_key_override = ko_make_basic(MOD_MASK_CTRL, KC_COMMA, KC_SCLN);
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
     &p_delete_key_override,
     &p_supr_key_override,
     &qesc_key_override,
+    &esp_tab_key_override,
+    &dot_colon_key_override,
+    &comm_scln_key_override,
     NULL // Null terminate the array of overrides!
 };
