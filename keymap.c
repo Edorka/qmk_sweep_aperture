@@ -92,9 +92,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
               KC_1    ,      KC_2     ,     KC_3      ,      KC_4     ,     KC_5      ,             KC_6      ,      KC_7     ,      KC_8     ,      KC_9     ,     KC_0      ,
     //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
-          KC_MS_LEFT  ,   KC_MS_UP    ,  KC_MS_DOWN   ,  KC_MS_RIGHT  ,    KC_ESC     ,            KC_LEFT    ,    KC_DOWN    ,     KC_UP     ,    KC_RIGHT   ,     KC_GRV    ,
+          MS_LEFT  ,   MS_UP    ,  MS_DOWN   ,  MS_RGHT  ,    KC_ESC     ,            KC_LEFT    ,    KC_DOWN    ,     KC_UP     ,    KC_RIGHT   ,     KC_GRV    ,
     //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
-          KC_MS_BTN1  ,    XXXXXXX    ,  KC_MS_BTN3   ,  KC_MS_BTN2   ,    XXXXXXX    ,            KC_HOME    ,    KC_PGDN    ,    KC_PGUP    ,     KC_END    ,     KC_TILD   ,
+          MS_BTN1  ,    XXXXXXX    ,  MS_BTN3   ,  MS_BTN2   ,    XXXXXXX    ,            KC_HOME    ,    KC_PGDN    ,    KC_PGUP    ,     KC_END    ,     KC_TILD   ,
     //|---------------+---------------+---------------+---------------+---------------|       |---------------+---------------+---------------+---------------+---------------|
     //                               |-------------------------+-------------------------| |-------------------------+-------------------------|
                                                 _______        ,        _______          ,           KC_DEL          ,      MO(_ADJUST)
@@ -105,9 +105,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //|---------------+---------------+---------------+---------------+------------------|       |---------------+---------------+---------------+-----------------+----------|
            QK_BOOT    ,    XXXXXXX    ,    XXXXXXX    ,    XXXXXXX    ,  KC_PRINT_SCREEN ,            XXXXXXX    ,    XXXXXXX    ,    XXXXXXX    , KC_AUDIO_VOL_UP ,  XXXXXXX ,
     //|---------------+---------------+---------------+---------------+------------------|       |---------------+---------------+---------------+-----------------+----------|
-           RGB_TOG    ,  G(C(S(KC_G))),    RGB_SAI    ,    RGB_VAI    ,S(KC_PRINT_SCREEN),            XXXXXXX    ,    XXXXXXX    ,    XXXXXXX    ,KC_AUDIO_VOL_DOWN,  XXXXXXX ,
+           RM_TOGG    ,  G(C(S(KC_G))),    RM_SATU    ,    RM_VALU    ,S(KC_PRINT_SCREEN),            XXXXXXX    ,    XXXXXXX    ,    XXXXXXX    ,KC_AUDIO_VOL_DOWN,  XXXXXXX ,
     //|---------------+---------------+---------------+---------------+------------------|       |---------------+---------------+---------------+-----------------+----------|
-           RGB_MOD    ,    RGB_HUD    ,    RGB_SAD    ,    RGB_VAD    ,    RGB_SPD       ,            XXXXXXX    ,    XXXXXXX    ,    XXXXXXX    ,  KC_AUDIO_MUTE  ,  XXXXXXX ,
+           RM_NEXT    ,    RM_HUED    ,    RM_SATD    ,    RM_VALD    ,    RM_SPDD       ,            XXXXXXX    ,    XXXXXXX    ,    XXXXXXX    ,  KC_AUDIO_MUTE  ,  XXXXXXX ,
     //|---------------+---------------+---------------+---------------+------------------|       |---------------+---------------+---------------+-----------------+----------|
     //                                  |-------------------------+-------------------------| |-------------------------+-------------------------|
                                                    XXXXXXX        ,        _______          ,           XXXXXXX         ,       XXXXXXX
@@ -122,12 +122,11 @@ const key_override_t dot_colon_key_override = ko_make_basic(MOD_MASK_CTRL, KC_DO
 const key_override_t comm_scln_key_override = ko_make_basic(MOD_MASK_CTRL, KC_COMMA, KC_SCLN);
 
 // This globally defines all key overrides to be used
-const key_override_t **key_overrides = (const key_override_t *[]){
+const key_override_t *key_overrides[] = {
     &p_delete_key_override,
     &p_supr_key_override,
     &qesc_key_override,
     &esp_tab_key_override,
     &dot_colon_key_override,
     &comm_scln_key_override,
-    NULL // Null terminate the array of overrides!
 };
